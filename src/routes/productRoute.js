@@ -7,7 +7,7 @@ const auth = require('../middlewares/auth');
 /**
  * routing
  */
-//router.route('/:idDetail').put(productController.updateOne);
+//router.route('/:idDetail').put(auth, productController.updateOne);
 router.route('/:id').delete(auth, productController.deleteOne);
 router.route('/').post(auth, productController.addOne);
 router.get('/:id', productController.getOne);

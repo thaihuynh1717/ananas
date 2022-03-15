@@ -22,7 +22,7 @@ function addRelations(include, model, condition) {
     return include;
 }
 /**
- * product service
+ * product service class
  */
 class ProductService {
     // update one
@@ -43,12 +43,9 @@ class ProductService {
         }
     }
     // add one
-    addOne(params) {
-        let newProduct = {
-            id: params.id,
-            name: params.name,
-        };
-        if (newProduct) {
+    async addOne(params) {
+        let [newProduct, created] = await Product.addOne({ params })
+        if (created) {
             return { success: true, newProduct };
         } else {
             return { success: false, error: 'add product failed' };
@@ -101,20 +98,21 @@ class ProductService {
             return { success: false, error: 'not found' };
         }
     }
-
     // get one
     async getOne(params) {
+        //
         let product = await Product.findOne({
             where: {
                 id: params.id,
             },
         });
+        //
         if (product) {
             const imgFolder = path.join(
                 __dirname,
                 '../resources/images/products/',
             );
-
+            //
             let images = [];
             fs.readdirSync(imgFolder).forEach((file) => {
                 if (file.includes(product.id)) {

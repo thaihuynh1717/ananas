@@ -35,49 +35,55 @@ module.exports = (db) => {
     product.belongsTo(db.design, { foreignKey: 'designId' });
     product.belongsTo(db.attribute, { foreignKey: 'attributeId' });
 
+    product.addOne = async (item) => {
+        let productLine = await db.productLine.findOne({
+            raw: true,
+            where: {
+                slug: item.line,
+            },
+        });
+        let design = await db.design.findOne({
+            raw: true,
+            where: {
+                slug: item.design
+            },
+        });
+        let attribute = await db.attribute.findOne({
+            raw: true,
+            where: {
+                slug: item.attribute.toLowerCase().replace(' ', '-'),
+            },
+        });
+        let [newProduct, created] = await db.product.findOrCreate({
+            where: {
+                id: item.id,
+            },
+            defaults: {
+                id: item.id,
+                name: item.name.toLocaleLowerCase(),
+                cost: item.cost,
+                description: item.description,
+                upper: item.upper.toLowerCase().replace(' ', '-'),
+                outsole: item.outsole.toLowerCase().replace(' ', '-'),
+                gender: item.gender,
+                productLineId: productLine.id,
+                attributeId: attribute.id,
+                designId: design.id,
+            },
+        });
+        return [ newProduct, created ]
+    }
+
     product.init = () => {
         let products = require('./allProducts.json');
         products.forEach(async (item) => {
-            let productLine = await db.productLine.findOne({
-                raw: true,
-                where: {
-                    slug: item.line,
-                },
-            });
-            let design = await db.design.findOne({
-                raw: true,
-                where: { slug: item.design },
-            });
-            let attribute = await db.attribute.findOne({
-                raw: true,
-                where: {
-                    slug: item.attribute.toLowerCase().replace(' ', '-'),
-                },
-            });
-
-            let [newProduct, created] = await db.product.findOrCreate({
-                where: {
-                    id: item.id,
-                },
-                defaults: {
-                    id: item.id,
-                    name: item.name.toLocaleLowerCase(),
-                    cost: item.cost,
-                    description: item.description,
-                    upper: item.upper.toLowerCase().replace(' ', '-'),
-                    outsole: item.outsole.toLowerCase().replace(' ', '-'),
-                    gender: item.gender,
-                    productLineId: productLine.id,
-                    attributeId: attribute.id,
-                    designId: design.id,
-                },
-            });
+            let [newProduct, created] = await product.addOne(item)
             if (created) {
                 let quantity = 100;
-                if (attribute.id == 0) {
+                if (newProduct.attributeId == 0) {
                     quantity = 10;
                 }
-                if (attribute.id == 6) {
+                if (newProduct.attributeId == 6) {
                     quantity = 0;
                 }
                 for (let size = 35; size <= 46; size++) {

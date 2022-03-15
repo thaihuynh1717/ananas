@@ -14,7 +14,7 @@ class ProductController {
     }
     // [POST] /api/products/
     addOne(req, res) {
-        productService.addOne(req.params, req.body).then((result) => {
+        productService.addOne(req.body).then((result) => {
             res.send(result);
         });
     }
