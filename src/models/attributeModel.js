@@ -12,5 +12,9 @@ module.exports = (db) => {
         },
     });
 
+    attribute.init = ()=>{
+        
+    }
+
     return attribute;
 };

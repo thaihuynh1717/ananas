@@ -1,6 +1,7 @@
 const db = require('../models');
 const fs = require('fs')
-const path = require('path')
+const path = require('path');
+const productService = require('../services/productService');
 
 function addCondition(include, model, condition) {
     include.push({
@@ -13,6 +14,11 @@ function addCondition(include, model, condition) {
 }
 
 class ProductController {
+    // [POST] /api/pro
+    async addOne(req, res){
+        productService.addOne(req.params, req.body)
+        res.send('add a single product')
+    }
     // [GET] /api/product-list
     async getAll(req, res) {
         let where = {};
