@@ -83,14 +83,14 @@ module.exports = (db) => {
                 for (let size = 35; size <= 46; size++) {
                     let newProductDetail = await db.productDetail.findOrCreate({
                         where: {
-                            productId: newProduct.id
+                            productId: newProduct.id,
                         },
                         defaults: {
-                            id: newProduct.id + size,
+                            id: newProduct.id + '_' + size,
                             size: size,
-                            quantity: quantity
-                        }
-                    })
+                            quantity: quantity,
+                        },
+                    });
                 }
             }
         });

@@ -23,7 +23,7 @@ module.exports = (db) => {
 
     admin.init = async () => {
         let passwordHashed = bcrypt.hashSync('admin1001', 10);
-        let admin1001 = await db.admin.findOrCreate({
+        let [firstAdmin, created] = await db.admin.findOrCreate({
             where: {
                 id: 1001,
             },
