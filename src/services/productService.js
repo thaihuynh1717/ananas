@@ -1,12 +1,14 @@
+/**
+ * variables
+ */
 const { Op } = require('sequelize');
 const db = require('../models');
+const fs = require('fs');
+const path = require('path');
 const Product = db.product,
     Attribute = db.attribute,
     ProductLine = db.productLine,
     Design = db.design;
-
-const fs = require('fs');
-const path = require('path');
 
 function addRelations(include, model, condition) {
     include.push({
@@ -85,7 +87,7 @@ class ProductService {
         if (products) {
             return { success: true, products };
         } else {
-            return { success: false, error: 'Not found' };
+            return { success: false, error: 'not found' };
         }
     }
 

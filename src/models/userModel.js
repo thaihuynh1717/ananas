@@ -1,5 +1,3 @@
-const { finalizeSession } = require('pg/lib/sasl');
-
 module.exports = (db) => {
     const { DataTypes } = require('sequelize');
     const user = db.define('user', {
@@ -19,5 +17,6 @@ module.exports = (db) => {
             allowNull: false,
         },
     });
+
     return user;
 };

@@ -1,7 +1,7 @@
 {
     "name": "nodejs",
     "version": "1.0.0",
-    "description": "",
+    "description": "1. get all products [done]",
     "main": "src/app.js",
     "scripts": {
         "start": "node src/app.js",
@@ -15,7 +15,6 @@
         "body-parser": "^1.19.2",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
-        "dotenv": "^16.0.0",
         "express": "^4.17.2",
         "express-session": "^1.17.2",
         "jsonwebtoken": "^8.5.1",
@@ -24,6 +23,7 @@
         "sequelize": "^6.15.0"
     },
     "devDependencies": {
+        "dotenv": "^16.0.0",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.15",
         "prettier": "^2.5.1"

@@ -12,9 +12,28 @@ module.exports = (db) => {
         },
     });
 
-    attribute.init = ()=>{
-        
-    }
+    attribute.init = () => {
+        let attributes = [
+            'Limited Edition',
+            'Online Only',
+            'Sale off',
+            'Best Seller',
+            'New Arrival',
+            'Sold Out',
+            'Stocking',
+        ];
+        attributes.forEach(async (e) => {
+            let newAttribute = await db.attribute.findOrCreate({
+                where: {
+                    id: attributes.indexOf(e),
+                },
+                defaults: {
+                    slug: e.toLowerCase().replaceAll(' ', '-'),
+                    title: e,
+                },
+            });
+        });
+    };
 
     return attribute;
 };

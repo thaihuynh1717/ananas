@@ -4,10 +4,9 @@ class AuthController {
         let { email, password } = req.body;
         res.send({
             email,
-            password
-        })
+            password,
+        });
     }
-
 }
 
 module.exports = new AuthController();

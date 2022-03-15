@@ -1,5 +1,5 @@
 const db = require('../models');
-const fs = require('fs')
+const fs = require('fs');
 const path = require('path');
 const productService = require('../services/productService');
 
@@ -7,7 +7,7 @@ function addCondition(include, model, condition) {
     include.push({
         model: model,
         where: {
-            slug: condition ,
+            slug: condition,
         },
     });
     return include;
@@ -15,31 +15,30 @@ function addCondition(include, model, condition) {
 
 class ProductController {
     // [POST] /api/pro
-    async addOne(req, res){
-        productService.addOne(req.params, req.body)
-        res.send('add a single product')
+    async addOne(req, res) {
+        productService.addOne(req.params, req.body);
+        res.send('add a single product');
     }
     // [GET] /api/product-list
     async getAll(req, res) {
         let where = {};
         let include = [];
-        let order = []
+        let order = [];
         let limit;
 
         // attribute
         if (req.query.attribute !== undefined && req.query.attribute !== '') {
-            addCondition(include, db.attribute, req.query.attribute)
+            addCondition(include, db.attribute, req.query.attribute);
         }
 
         // product line
         if (req.query.line !== undefined && req.query.line !== '') {
-            addCondition(include, db.productLine, req.query.line)
+            addCondition(include, db.productLine, req.query.line);
         }
 
-
-        // design 
+        // design
         if (req.query.design !== undefined && req.query.design !== '') {
-            addCondition(include, db.design, req.query.design)
+            addCondition(include, db.design, req.query.design);
         }
 
         // gender
@@ -54,10 +53,15 @@ class ProductController {
 
         // limit
         if (req.query.limit !== undefined && req.query.limit !== '') {
-            limit = req.query.limit
+            limit = req.query.limit;
         }
 
-        let product_list = await db.product.findAll({ where, include, order, limit });
+        let product_list = await db.product.findAll({
+            where,
+            include,
+            order,
+            limit,
+        });
 
         // response
         res.json(product_list);
@@ -74,7 +78,7 @@ class ProductController {
         const imgFolder = path.join(__dirname, '../resources/images/products/');
 
         let imageProduct = [];
-        fs.readdirSync(imgFolder).forEach(file => {
+        fs.readdirSync(imgFolder).forEach((file) => {
             if (file.includes(product.id)) {
                 imageProduct.push(file);
             }
@@ -83,7 +87,7 @@ class ProductController {
         // send response
         res.json({
             product,
-            imageProduct
+            imageProduct,
         });
     }
 }

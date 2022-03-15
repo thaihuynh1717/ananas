@@ -1,30 +1,33 @@
+/**
+ * required modules
+ */
+require('dotenv').config()
+/**
+ * variables
+ */
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const path = require('path');
 const morgan = require('morgan');
 const route = require('./routes');
 const db = require('./models');
-const bodyParser= require('body-parser')
-
-
-// parsing the incoming data
+/**
+ * app configure
+ */
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// route init
-route(app);
-
-//serving static file
+app.use(morgan('combined'));
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'resources/images')));
-
-// dev packages
-app.use(morgan('combined'));
-
-// app listens to requests
+/**
+ * app routing
+ */
+route(app);
+/**
+ * app listens to requests
+ */
 app.listen(port, async () => {
-    // wait database sync
-    await db.sync();
+    await db.init()
     console.log(`App is listening on port ${port}`);
 });
