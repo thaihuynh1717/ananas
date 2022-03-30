@@ -1,27 +1,34 @@
 module.exports = (db) => {
     const { DataTypes } = require('sequelize');
-    const cart = db.define('cart', {
+    // inventory("productId","size", quantity)
+    const stock = db.define('stock', {
+        id: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+        },
+        size: {
+            type: DataTypes.INTEGER,
+        },
         quantity: {
             type: DataTypes.INTEGER,
         },
         isDeleted: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false,
+            defaultValue: false
         },
         isNew: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: true,
-        },
+            defaultValue: true
+        }
     });
     /**
      * belongsTo
      */
-    cart.belongsTo(db.user, { foreignKey: 'userId' });
-    cart.belongsTo(db.product, { foreignKey: 'productId' });
+    stock.belongsTo(db.product, { foreignKey: 'productId' });
     /**
      * return
      */
-    return cart;
+    return stock;
 };

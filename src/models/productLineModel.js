@@ -6,9 +6,19 @@ module.exports = (db) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        title: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isNew: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true,
         },
     });
     /**
@@ -37,8 +47,8 @@ module.exports = (db) => {
                     id: productLines.indexOf(e),
                 },
                 defaults: {
-                    slug: e.toString().toLowerCase().replaceAll(' ', '-'),
-                    title: e,
+                    slug: e.toLowerCase().replaceAll(' ', '-'),
+                    name: e.toLowerCase(),
                 },
             });
         });

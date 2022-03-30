@@ -26,15 +26,15 @@
 
 -   [GET] /api/products?limit=5
 
-7. add new product
+7. add new product [50%]
 
 -   [POST] /api/products
 
-8. update a product
+8. update a product [10%]
 
 -   [PUT] /api/products/p001
 
-9. delete a product
+9. delete a product [30%]
 
 -   [DELETE] /api/products/:id
 
@@ -42,15 +42,15 @@
 
 1. get all cart
 
--   [GET] /api/carts
+-
 
 2. get a single cart
 
--   [GET] /api/carts/c001
+-
 
 3. find a cart
 
--   [GET] /api/cart?key=090
+-
 
 4. get carts in a date range
 

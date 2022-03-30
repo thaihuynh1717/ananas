@@ -28,6 +28,6 @@ route(app);
  * app listens to requests
  */
 app.listen(port, async () => {
-    await db.init()
+    await db.init();
     console.log(`App is listening on port ${port}`);
 });

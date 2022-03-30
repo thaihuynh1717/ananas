@@ -18,23 +18,28 @@ const db = new Sequelize(process.env.DATABASE_URL, {
 /**
  * define all models
  */
-db.admin = require('./adminModel')(db);
+db.role=require('./roleModel')(db);
+db.employee = require('./employeeModel')(db);
 db.user = require('./userModel')(db);
 db.attribute = require('./attributeModel')(db);
 db.productLine = require('./productLineModel')(db);
 db.design = require('./designModel')(db);
+db.gender=require('./genderModel')(db);
 db.product = require('./productModel')(db);
-db.productDetail = require('./productDetailModel')(db);
+db.stock = require('./stockModel')(db);
 db.cart = require('./cartModel')(db);
 /**
  * database init
  */
 db.init = () => {
     db.sync().then(() => {
-        db.admin.init();
+        db.role.init()
+        db.employee.init();
+        db.user.init()
         db.attribute.init();
         db.productLine.init();
         db.design.init();
+        db.gender.init()
         db.product.init();
     });
 };

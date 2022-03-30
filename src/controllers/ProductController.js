@@ -28,7 +28,7 @@ class ProductController {
     getOne(req, res) {
         productService.getOne(req.params).then((result) => {
             res.send(result);
-        })
+        });
     }
 }
 /**

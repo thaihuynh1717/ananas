@@ -2,13 +2,23 @@ module.exports = (db) => {
     const { DataTypes } = require('sequelize');
     // attribute("id", title)
     const attribute = db.define('attribute', {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         slug: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        title: {
-            type: DataTypes.STRING,
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false
+        },
+        isNew: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true,
         },
     });
 
@@ -28,8 +38,8 @@ module.exports = (db) => {
                     id: attributes.indexOf(e),
                 },
                 defaults: {
+                    name: e.toLowerCase(),
                     slug: e.toLowerCase().replaceAll(' ', '-'),
-                    title: e,
                 },
             });
         });

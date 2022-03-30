@@ -1,4 +1,4 @@
 /**
  * product service
  */
-module.exports.productService = require('./productService')
+module.exports.productService = require('./productService');

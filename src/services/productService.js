@@ -26,9 +26,7 @@ function addRelations(include, model, condition) {
  */
 class ProductService {
     // update one
-    async updateOne(params) {
-
-    }
+    async updateOne(params) {}
 
     // delete one
     deleteOne(params) {
@@ -44,7 +42,7 @@ class ProductService {
     }
     // add one
     async addOne(params) {
-        let [newProduct, created] = await Product.addOne({ params })
+        let [newProduct, created] = await Product.addOne({ params });
         if (created) {
             return { success: true, newProduct };
         } else {
@@ -87,6 +85,9 @@ class ProductService {
         // find all
         let products = await Product.findAll({
             where,
+            attributes: [
+                //'id', 'name', 'cost', 'description', 'upper', 'outsole', 'gender',
+            ],
             include,
             order,
             limit,
